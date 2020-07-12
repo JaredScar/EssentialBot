@@ -1,0 +1,13 @@
+###################
+### Bot Details ###
+###################
+BotToken: ''
+
+###################
+### SQL Details ###
+###################
+Host: 'badger.store'
+Database_Name: ''
+Username: ''
+Password: 'PASSWORD'
+Port: 3306 # This is usually the default port for MySQL servers, you will most likely not need to change this
