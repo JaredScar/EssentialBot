@@ -1,5 +1,10 @@
 # EssentialBot
 
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://badger.store)
+[![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)](https://forthebadge.com)
+
+[![forthebadge](https://forthebadge.com/images/badges/check-it-out.svg)](https://github.com/JaredScar/EssentialBot/releases)
+
 ## What is it?
 
 EssentialBot is well, an essential bot for your discord server. All of 
