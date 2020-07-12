@@ -22,7 +22,7 @@ public class StickyCommand extends ListenerAdapter {
             evt.getMessage().delete().submit();
             // They want to sticky a message here
             if (mem != null && mem.getUser() != null && !mem.getUser().isFake() && !mem.getUser().isBot()) {
-                if (API.get().hasPermission(guildID, mem, "permissionSticky")) {
+                if (mem.isOwner() || API.get().hasPermission(guildID, mem, "permissionSticky")) {
                     // They have permission to do it
                     if (argsString.length() > 0) {
                         // It's a valid message, we can use it
@@ -43,7 +43,7 @@ public class StickyCommand extends ListenerAdapter {
             evt.getMessage().delete().submit();
             // They want to unsticky the message here
             if (mem != null && mem.getUser() != null && !mem.getUser().isFake() && !mem.getUser().isBot()) {
-                if (API.get().hasPermission(guildID, mem, "permissionSticky")) {
+                if (mem.isOwner() || API.get().hasPermission(guildID, mem, "permissionSticky")) {
                     // They have permission to do it
                     StickyHandler.get().removeSticky(guildID, chanID);
                     evt.getChannel().sendMessage(API.get().getSuccessEmbed("You have removed the stickied message!", mem).build()).submit();

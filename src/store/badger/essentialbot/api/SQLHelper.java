@@ -12,7 +12,7 @@ public class SQLHelper {
             e.printStackTrace();
         }
         conn = DriverManager.getConnection(
-                "jdbc:mysql://" + ip + ":" + port + "/" + dbName,username,password);
+                "jdbc:mysql://" + ip + ":" + port + "/" + dbName + "?useUnicode=true&characterEncoding=UTF8", username, password);
         this.isConnected = true;
     }
 
