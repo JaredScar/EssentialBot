@@ -46,7 +46,7 @@ It is a planned feature coming soon.
 
 ## Screenshots
 
-
+![Using the Help Menu](https://i.gyazo.com/66c6939703788b487a43fdee852cf630.gif)
 
 ## Configuration
 ```yaml
