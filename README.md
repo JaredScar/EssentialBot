@@ -19,8 +19,10 @@ paid monthly to utilize.`
 `permissionSticky`, `permissionKick`, `permissionShadowBan`, 
 `permissionBan`
 
-`=perm toggle <permission> <roleID>` - This command will toggle permissions for the 
+*`=perm toggle <permission> <roleID>` - This command will toggle permissions for the 
 role specified. A role tag or role ID can go in the `<roleID>` parameter.
+
+`=help` - Shows the help menu for EssentialBot
 
 `=sticky <msg>` - Sticky a message to the bottom of the screen, this will also turn the 
 channel into a 15 second slowmode whilst a sticky message is active (by default). 
@@ -28,12 +30,19 @@ channel into a 15 second slowmode whilst a sticky message is active (by default)
 `=unsticky` - This will unsticky a message from a channel (if there is an sticky 
 message active within the channel it is ran in). 
 
-`=kick @User` - This will kick a user from the discord. 
+*`=kick @User` - This will kick a user from the discord. 
 
-`=shadowb @User` - This will shadow ban a user from the discord. Basically they will be 
+*`=shadowb @User` - This will shadow ban a user from the discord. Basically they will be 
 denied access to every discord channel within the discord. (Even if they join back!) 
 
-`=ban @User` - This will ban the user from the discord permanently. 
+*`=unshadowb @User` - This will unshadow ban a user from the discord.
+
+*`=ban @User` - This will ban the user from the discord permanently. 
+
+*`=unban @User` - This will unban the user from the discord.
+
+*`Command` - This means this command and/or feature has not been implemented as of yet. 
+It is a planned feature coming soon.
 
 ## Screenshots
 
@@ -58,6 +67,7 @@ Port: 3306 # This is usually the default port for MySQL servers, you will most l
 
 
 ## Download
+https://github.com/JaredScar/EssentialBot
 
 ## Invite me to your server:
 https://discord.com/api/oauth2/authorize?client_id=606882845486481448&permissions=8&scope=bot
