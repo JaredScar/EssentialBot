@@ -16,8 +16,8 @@ public class StickyCommand extends ListenerAdapter {
         long chanID = evt.getChannel().getIdLong();
         long guildID = evt.getGuild().getIdLong();
         String command = evt.getMessage().getContentRaw().split(" ")[0];
-        String[] args = evt.getMessage().getContentRaw().replace(command, "").split(" ");
-        String argsString = evt.getMessage().getContentRaw().replace(command, "");
+        String[] args = evt.getMessage().getContentRaw().replace(command + " ", "").split(" ");
+        String argsString = evt.getMessage().getContentRaw().replace(command + " ", "");
         if (command.equalsIgnoreCase("=sticky")) {
             evt.getMessage().delete().submit();
             // They want to sticky a message here

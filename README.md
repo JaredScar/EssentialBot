@@ -24,7 +24,7 @@ paid monthly to utilize.`
 `permissionSticky`, `permissionKick`, `permissionShadowBan`, 
 `permissionBan`
 
-*`=perm toggle <permission> <roleID>` - This command will toggle permissions for the 
+`=perm toggle <permission> <roleID>` - This command will toggle permissions for the 
 role specified. A role tag or role ID can go in the `<roleID>` parameter.
 
 `=help` - Shows the help menu for EssentialBot
@@ -35,14 +35,14 @@ channel into a 15 second slowmode whilst a sticky message is active (by default)
 `=unsticky` - This will unsticky a message from a channel (if there is an sticky 
 message active within the channel it is ran in). 
 
-*`=kick @User` - This will kick a user from the discord. 
+`=kick @User <reason>` - This will kick a user from the discord. 
 
-*`=shadowb @User` - This will shadow ban a user from the discord. Basically they will be 
+*`=shadowb @User <reason>` - This will shadow ban a user from the discord. Basically they will be 
 denied access to every discord channel within the discord. (Even if they join back!) 
 
 *`=unshadowb @User` - This will unshadow ban a user from the discord.
 
-*`=ban @User` - This will ban the user from the discord permanently. 
+*`=ban @User <reason>` - This will ban the user from the discord permanently. 
 
 *`=unban @User` - This will unban the user from the discord.
 

@@ -7,6 +7,8 @@ import net.dv8tion.jda.core.entities.Game;
 import store.badger.essentialbot.api.API;
 import store.badger.essentialbot.api.SQLHelper;
 import store.badger.essentialbot.commands.HelpCommand;
+import store.badger.essentialbot.commands.KickCommand;
+import store.badger.essentialbot.commands.PermCommand;
 import store.badger.essentialbot.commands.StickyCommand;
 import store.badger.essentialbot.handlers.StickyHandler;
 import store.badger.essentialbot.objects.StickyMessage;
@@ -35,6 +37,8 @@ public class Main {
                 .addEventListener(StickyHandler.get())
                 .addEventListener(new StickyCommand())
                 .addEventListener(new HelpCommand())
+                .addEventListener(new KickCommand())
+                .addEventListener(new PermCommand())
                 .build();
         jda.awaitReady();
         jda.getPresence().setPresence(Game.playing(" " + jda.getGuilds().size() + " Guilds | =help"), true);

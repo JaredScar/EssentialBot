@@ -83,7 +83,7 @@ public class HelpCommand extends ListenerAdapter {
                             "React below to change the page."
                     );
                     pages.add(
-                            "*`=perm toggle <permission> <roleID>`: Toggle permissions for the " +
+                            "`=perm toggle <permission> <roleID>`: Toggle permissions for the " +
                                     "role specified. A role tag or role ID can go in the `<roleID>` parameter. \n[Requires `ADMINISTRATOR`]" +
                                     "\n\n\n" +
                                     "`=help`: Shows the help menu for EssentialBot\n" +
@@ -94,18 +94,15 @@ public class HelpCommand extends ListenerAdapter {
                                     "`=unsticky`: This will unsticky a message from a channel (if there is an sticky " +
                                     "message active within the channel it is ran in). \n[Requires `permissionSticky`] \n" +
                                     "\n\n" +
-                                    "*`=kick @User`: This will kick a user from the discord. \n[Requires `permissionKick`] \n" +
-                                    "\n\n" +
-                                    "*`Command`: This means this command and/or feature has not been implemented as of yet. " +
-                                    "It is a planned feature coming soon."
+                                    "`=kick @User <reason>`: This will kick a user from the discord. \n[Requires `permissionKick`]"
                     );
                     pages.add(
-                            "*`=shadowb @User`: This will shadow ban a user from the discord. Basically they will be " +
+                            "*`=shadowb @User <reason>`: This will shadow ban a user from the discord. Basically they will be " +
                                     "denied access to every discord channel within the discord. (Even if they join back!) \n[Requires `permissionShadowBan`] \n" +
                                     "\n\n" +
                                     "*`=unshadowb @User`: This will unshadow ban a user from the discord. \n[Requires `permissionShadowBan`]\n" +
                                     "\n\n" +
-                                    "*`=ban @User`: This will ban the user from the discord permanently. \n[Requires `permissionBan`]\n" +
+                                    "*`=ban @User <reason>`: This will ban the user from the discord permanently. \n[Requires `permissionBan`]\n" +
                                     "\n\n" +
                                     "*`=unban @User`: This will unban the user from the discord. \n[Requires `permissionBan`]" + "\n\n\n" +
                                     "*`Command`: This means this command and/or feature has not been implemented as of yet. " +
