@@ -37,3 +37,11 @@ CREATE TABLE `RolePermissions` (
     `permissionShadowBan` BIT(1),
     `permissionBan` BIT(1)
 );
+
+DROP TABLE `ShadowBans`;
+CREATE TABLE `ShadowBans` (
+    `SB_ID` INTEGER(64) AUTO_INCREMENT PRIMARY KEY,
+    `GuildID` BIGINT(32),
+    `UserID` BIGINT(32),
+    `Reason` TEXT(1024)
+);

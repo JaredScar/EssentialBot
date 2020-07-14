@@ -37,14 +37,14 @@ message active within the channel it is ran in).
 
 `=kick @User <reason>` - This will kick a user from the discord. 
 
-*`=shadowb @User <reason>` - This will shadow ban a user from the discord. Basically they will be 
+`=shadowb @User <reason>` - This will shadow ban a user from the discord. Basically they will be 
 denied access to every discord channel within the discord. (Even if they join back!) 
 
-*`=unshadowb @User` - This will unshadow ban a user from the discord.
+`=unshadowb @User` - This will unshadow ban a user from the discord.
 
-*`=ban @User <reason>` - This will ban the user from the discord permanently. 
+`=ban @User <reason>` - This will ban the user from the discord permanently. 
 
-*`=unban @User` - This will unban the user from the discord.
+`=unban @User` - This will unban the user from the discord.
 
 *`Command` - This means this command and/or feature has not been implemented as of yet. 
 It is a planned feature coming soon.

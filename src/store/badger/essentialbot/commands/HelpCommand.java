@@ -97,16 +97,14 @@ public class HelpCommand extends ListenerAdapter {
                                     "`=kick @User <reason>`: This will kick a user from the discord. \n[Requires `permissionKick`]"
                     );
                     pages.add(
-                            "*`=shadowb @User <reason>`: This will shadow ban a user from the discord. Basically they will be " +
+                            "`=shadowb @User <reason>`: This will shadow ban a user from the discord. Basically they will be " +
                                     "denied access to every discord channel within the discord. (Even if they join back!) \n[Requires `permissionShadowBan`] \n" +
                                     "\n\n" +
-                                    "*`=unshadowb @User`: This will unshadow ban a user from the discord. \n[Requires `permissionShadowBan`]\n" +
+                                    "`=unshadowb @User`: This will unshadow ban a user from the discord. \n[Requires `permissionShadowBan`]\n" +
                                     "\n\n" +
-                                    "*`=ban @User <reason>`: This will ban the user from the discord permanently. \n[Requires `permissionBan`]\n" +
+                                    "`=ban @User <reason>`: This will ban the user from the discord permanently. \n[Requires `permissionBan`]\n" +
                                     "\n\n" +
-                                    "*`=unban @User`: This will unban the user from the discord. \n[Requires `permissionBan`]" + "\n\n\n" +
-                                    "*`Command`: This means this command and/or feature has not been implemented as of yet. " +
-                                    "It is a planned feature coming soon."
+                                    "`=unban @User`: This will unban the user from the discord. \n[Requires `permissionBan`]"
                     );
                 }
                 try {

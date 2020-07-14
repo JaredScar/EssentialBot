@@ -62,6 +62,44 @@ public class API {
         }
         return false;
     }
+    public boolean unshadowBan(Member mem) {
+        SQLHelper helper = getHelper();
+        if (helper.runStatement("DELETE FROM `ShadowBans` WHERE `GuildID` = " +
+                mem.getGuild().getIdLong() + " AND `UserID` = " + mem.getUser().getIdLong())) {
+            return true;
+        }
+        return false;
+    }
+    public boolean shadowBan(Member mem, String reason) {
+        SQLHelper helper = getHelper();
+        try {
+            PreparedStatement stmt = helper.getConn().prepareStatement("INSERT INTO `ShadowBans` VALUES (" +
+                    "0, ?, ?, ?);");
+            stmt.setLong(1, mem.getGuild().getIdLong());
+            stmt.setLong(2, mem.getUser().getIdLong());
+            stmt.setString(3, reason);
+            stmt.execute();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    public boolean isAlreadyShadowBanned(Member mem) {
+        SQLHelper helper = getHelper();
+        ResultSet res = helper.runQuery("SELECT COUNT(*) AS total FROM `ShadowBans` WHERE `GuildID` = " +
+                mem.getGuild().getIdLong() + " AND `UserID` = " + mem.getUser().getIdLong());
+        try {
+            if (res.next()) {
+                if (res.getInt("total") > 0) {
+                    return true;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
     public void cleanup(long guildID, long roleID) {
         // Check if all permissions are false, if they are, we can remove it all together
         try {
