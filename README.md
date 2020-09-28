@@ -22,7 +22,7 @@ paid monthly to utilize.`
 
 **Current Possible Permissions:** 
 `permissionSticky`, `permissionKick`, `permissionShadowBan`, 
-`permissionBan`
+`permissionBan`, `permissionLockdown`
 
 `=perm toggle <permission> <roleID>` - This command will toggle permissions for the 
 role specified. A role tag or role ID can go in the `<roleID>` parameter.
@@ -45,6 +45,15 @@ denied access to every discord channel within the discord. (Even if they join ba
 `=ban @User <reason>` - This will ban the user from the discord permanently. 
 
 `=unban @User` - This will unban the user from the discord.
+
+`=servers` - List the servers EssentialBot is on.
+
+`=servercount` - Show how many servers in total EssentialBot is on.
+
+`=lockdown <reason>` - This will lock/unlock the discord and [if locked] prevent people from joining 
+whilst messaging them the reason they cannot join (`<reason>`).
+
+`=lockstatus` - Take a look of the lockdown status of the server.
 
 *`Command` - This means this command and/or feature has not been implemented as of yet. 
 It is a planned feature coming soon.

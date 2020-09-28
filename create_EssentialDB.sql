@@ -35,7 +35,15 @@ CREATE TABLE `RolePermissions` (
     `permissionSticky` BIT(1),
     `permissionKick` BIT(1),
     `permissionShadowBan` BIT(1),
-    `permissionBan` BIT(1)
+    `permissionBan` BIT(1),
+    `permissionLockdown` BIT(1)
+);
+
+DROP TABLE `Lockdown`;
+CREATE TABLE `Lockdown` (
+    `LD_ID` INTEGER(64) AUTO_INCREMENT PRIMARY KEY,
+    `GuildID` BIGINT(32),
+    `Reason` TEXT(1024)
 );
 
 DROP TABLE `ShadowBans`;

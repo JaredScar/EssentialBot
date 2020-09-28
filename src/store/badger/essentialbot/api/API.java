@@ -121,6 +121,72 @@ public class API {
             ex.printStackTrace();
         }
     }
+
+    public boolean toggleLockdown(long guildID, String reason) {
+        SQLHelper helper = getHelper();
+        try {
+            PreparedStatement stmt = helper.getConn().prepareStatement("SELECT COUNT(*) as total FROM `Lockdown` WHERE `GuildID` = ?");
+            stmt.setLong(1, guildID);
+            stmt.execute();
+            ResultSet res = stmt.getResultSet();
+            boolean isLockedDown = false;
+            if (res.next()) {
+                int total = res.getInt("total");
+                if (total > 0) {
+                    isLockedDown = true;
+                }
+            }
+            if (isLockedDown) {
+                // It's locked down, unlock it
+                stmt = helper.getConn().prepareStatement("DELETE FROM `Lockdown` WHERE `GuildID` = ?");
+                stmt.setLong(1, guildID);
+                return stmt.execute();
+            } else {
+                // It needs to be locked down
+                stmt = helper.getConn().prepareStatement("INSERT INTO `Lockdown` VALUES (0, ?, ?)");
+                stmt.setLong(1, guildID);
+                stmt.setString(2, reason);
+                return stmt.execute();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    public String getLockdownReason(long guildID) {
+        SQLHelper helper = getHelper();
+        try {
+            PreparedStatement stmt = helper.getConn().prepareStatement("SELECT `Reason` as reason FROM `Lockdown` WHERE `GuildID` = ?");
+            stmt.setLong(1, guildID);
+            stmt.execute();
+            ResultSet res = stmt.getResultSet();
+            if (res.next()) {
+                return res.getString("reason");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    public boolean isLockedDown(long guildID) {
+        SQLHelper helper = getHelper();
+        try {
+            PreparedStatement stmt = helper.getConn().prepareStatement("SELECT COUNT(*) as total FROM `Lockdown` WHERE `GuildID` = ?");
+            stmt.setLong(1, guildID);
+            stmt.execute();
+            ResultSet res = stmt.getResultSet();
+            if (res.next()) {
+                int total = res.getInt("total");
+                if (total > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean[] togglePermission(long guildID, long roleID, String permission) {
         SQLHelper helper = getHelper();
         try {
@@ -151,7 +217,7 @@ public class API {
                 }
             } else {
                 // Doesn't contain it, insert it
-                stmt = helper.getConn().prepareStatement("INSERT INTO `RolePermissions` VALUES (0, ?, ?, ?, ?, ?, ?);");
+                stmt = helper.getConn().prepareStatement("INSERT INTO `RolePermissions` VALUES (0, ?, ?, ?, ?, ?, ?, ?);");
                 stmt.setLong(1, guildID);
                 stmt.setLong(2, roleID);
                 if (permission.equals("permissionSticky")) {
@@ -173,6 +239,11 @@ public class API {
                     stmt.setBoolean(6, currentPerm);
                 } else {
                     stmt.setBoolean(6, false);
+                }
+                if (permission.equals("permissionLockdown")) {
+                    stmt.setBoolean(7, currentPerm);
+                } else {
+                    stmt.setBoolean(7, false);
                 }
                 if (!stmt.execute()) {
                     return new boolean[]{true, currentPerm};
@@ -232,6 +303,15 @@ public class API {
         embed.setFooter(mem.getUser().getAsTag(), mem.getUser().getAvatarUrl());
         embed.setTitle("ERROR ENCOUNTERED");
         embed.addField("", "**" + errorMsg + "**", false);
+        embed.setThumbnail("https://i.gyazo.com/2100c92bd7ac6040afdace35b1d0446e.png");
+        return embed;
+    }
+    public EmbedBuilder getCustomEmbed(String title, String successMsg, Color color, Member mem) {
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setColor(color);
+        embed.setFooter(mem.getUser().getAsTag(), mem.getUser().getAvatarUrl());
+        embed.setTitle(title);
+        embed.addField("", successMsg, false);
         embed.setThumbnail("https://i.gyazo.com/2100c92bd7ac6040afdace35b1d0446e.png");
         return embed;
     }

@@ -7,6 +7,8 @@ import net.dv8tion.jda.core.entities.Game;
 import store.badger.essentialbot.api.API;
 import store.badger.essentialbot.api.SQLHelper;
 import store.badger.essentialbot.commands.*;
+import store.badger.essentialbot.handlers.LockdownHandler;
+import store.badger.essentialbot.handlers.ShadowHandler;
 import store.badger.essentialbot.handlers.StickyHandler;
 import store.badger.essentialbot.objects.StickyMessage;
 
@@ -40,6 +42,10 @@ public class Main {
                 .addEventListener(new UnbanCommand())
                 .addEventListener(new ShadowBanCommand())
                 .addEventListener(new UnshadowBanCommand())
+                .addEventListener(new ShadowHandler())
+                .addEventListener(new LockdownHandler())
+                .addEventListener(new LockdownCommand())
+                .addEventListener(new SimpleCommands())
                 .build();
         jda.awaitReady();
         jda.getPresence().setPresence(Game.playing(" " + jda.getGuilds().size() + " Guilds | =help"), true);

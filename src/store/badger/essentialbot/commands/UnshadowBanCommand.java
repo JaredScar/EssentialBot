@@ -52,7 +52,6 @@ public class UnshadowBanCommand extends ListenerAdapter {
                                             }
                                         }
                                     }
-                                    channelAlreadyDone = false;
                                     for (VoiceChannel chann : evt.getJDA().getVoiceChannels()) {
                                         channelAlreadyDone = false;
                                         for (Role role : toShadowBan.getRoles()) {

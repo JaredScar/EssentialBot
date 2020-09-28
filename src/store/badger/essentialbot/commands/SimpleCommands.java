@@ -12,18 +12,18 @@ import store.badger.essentialbot.main.Main;
 
 import java.util.*;
 
-public class HelpCommand extends ListenerAdapter {
+public class SimpleCommands extends ListenerAdapter {
     private ArrayList<String> pages = new ArrayList<>();
     private HashMap<Long, Integer> pageTracker = new HashMap<>();
     private HashMap<Long, Integer> menuActivityTimer = new HashMap<>();
     private HashMap<Long, Long> menuPlayerTrack = new HashMap<>();
     private HashMap<Long, Long> guildTrack = new HashMap<>();
     private HashMap<Long, Long> channelTrack = new HashMap<>();
-    // TODO Eventually just make this into a sub-class called "Help-Menu" that tracks it all ^^^
-    private String HELP_TITLE = "EssentialBot Help - Page {PAGE}";
-    private String HELP_FOOTER = "© 2020 Badger, All Rights Reserved";
+    private String SERVER_TITLE = "EssentialBot Servers - Page {PAGE}";
+    private String SERVER_FOOTER = "© 2020 Badger, All Rights Reserved";
+    private int GUILDS_PER_PAGE = 6;
     private int delay_delete = 60; // Delete the menu after 60 seconds of inactivity
-    public HelpCommand() {
+    public SimpleCommands() {
         // Start timer for activityTimer
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -66,60 +66,47 @@ public class HelpCommand extends ListenerAdapter {
         String command = evt.getMessage().getContentRaw().split(" ")[0];
         String[] args = evt.getMessage().getContentRaw().replace(command, "").split(" ");
         String argsString = evt.getMessage().getContentRaw().replace(command, "");
-        if (command.equalsIgnoreCase("=help")) {
+        if (command.equalsIgnoreCase("=servercount")) {
+            chan.sendMessage(API.get().getEssentialEmbed("EssentialBot's Server Count", "EssentialBot is on `"
+                            + evt.getJDA().getGuilds().size() + "` servers in total...",
+                    null, SERVER_FOOTER, Main.get().getJDA().getSelfUser().getAvatarUrl()).build()).submit();
+        } else if (command.equalsIgnoreCase("=servers")) {
             if (mem != null && mem.getUser() != null && !mem.getUser().isFake() && !mem.getUser().isBot()) {
                 evt.getMessage().delete().submit();
-                if (pages.size() == 0) {
-                    // It needs the pages set up
-                    pages.add("EssentialBot is well, an essential bot for your discord server. All of " +
-                            "EssentialBot's commands can be configured to be used by discord roles on your discord " +
-                            "server. This is a much more advanced permission system than discord's system " +
-                            "considering you can set up permissions for each command and/or action the bot can " +
-                            "perform." +
-                            "\n\n" +
-                            "**Name:** " + Main.get().getJDA().getSelfUser().getName() + "\n" +
-                            "**Creation Date:** " + "July 12th, 2020" +
-                            "\n\n" +
-                            "React below to change the page."
-                    );
-                    pages.add(
-                            "`=perm toggle <permission> <roleID>`: Toggle permissions for the " +
-                                    "role specified. A role tag or role ID can go in the `<roleID>` parameter. \n[Requires `ADMINISTRATOR`]" +
-                                    "\n\n\n" +
-                                    "`=help`: Shows the help menu for EssentialBot\n" +
-                                    "\n\n" +
-                                    "`=sticky <msg>`: Sticky a message to the bottom of the screen, this will also turn the " +
-                                    "channel into a 15 second slowmode whilst a sticky message is active (by default). \n[Requires `permissionSticky`] \n" +
-                                    "\n\n" +
-                                    "`=unsticky`: This will unsticky a message from a channel (if there is an sticky " +
-                                    "message active within the channel it is ran in). \n[Requires `permissionSticky`] \n" +
-                                    "\n\n" +
-                                    "`=kick @User <reason>`: This will kick a user from the discord. \n[Requires `permissionKick`]"
-                    );
-                    pages.add(
-                            "`=shadowb @User <reason>`: This will shadow ban a user from the discord. Basically they will be " +
-                                    "denied access to every discord channel within the discord. (Even if they join back!) \n[Requires `permissionShadowBan`] \n" +
-                                    "\n\n" +
-                                    "`=unshadowb @User`: This will unshadow ban a user from the discord. \n[Requires `permissionShadowBan`]\n" +
-                                    "\n\n" +
-                                    "`=ban @User <reason>`: This will ban the user from the discord permanently. \n[Requires `permissionBan`]\n" +
-                                    "\n\n" +
-                                    "`=unban @User`: This will unban the user from the discord. \n[Requires `permissionBan`]" +
-                                    "\n\n" +
-                                    "`=lockdown <reason>`: This will lock/unlock the discord and [locked] prevent people from joining \n" +
-                                    "whilst messaging them the reason they cannot join (`<reason>`). \n[Requires `permissionLockdown`]"
-                    );
-                    pages.add(
-                            "`=lockstatus`: Take a look of the lockdown status of the server." +
-                                "\n\n" +
-                                "`=servers`: List the servers EssentialBot is on." +
-                                "\n\n" +
-                                "`=servercount`: Show how many servers in total EssentialBot is on."
-                    );
+                int curCount = 0;
+                Guild[] guildArr = new Guild[GUILDS_PER_PAGE];
+                for (Guild guild : evt.getJDA().getGuilds()) {
+                    // Looping through their guilds
+                    if (curCount < (GUILDS_PER_PAGE - 1)) {
+                        guildArr[curCount] = guild;
+                    } else {
+                        guildArr[curCount] = guild;
+                        curCount = -1;
+                        String addStr = "";
+                        for (Guild gadd : guildArr) {
+                            if (gadd != null) {
+                                addStr += "**" + gadd.getName() + "** - Owner: `" + gadd.getMemberById(gadd.getOwnerId()).getUser().getName()
+                                        + "#" + gadd.getMemberById(gadd.getOwnerId()).getUser().getDiscriminator() + "`" + "\n\n";
+                            }
+                        }
+                        guildArr = new Guild[GUILDS_PER_PAGE];
+                        pages.add(addStr);
+                    }
+                    curCount++;
+                }
+                if (curCount != 0) {
+                    String addStr = "";
+                    for (Guild gadd : guildArr) {
+                        if (gadd != null) {
+                            addStr += "**" + gadd.getName() + "** - Owner: `" + gadd.getMemberById(gadd.getOwnerId()).getUser().getName()
+                                    + "#" + gadd.getMemberById(gadd.getOwnerId()).getUser().getDiscriminator() + "`" + "\n\n";
+                        }
+                    }
+                    pages.add(addStr);
                 }
                 try {
-                    Message msg = chan.sendMessage(API.get().getEssentialEmbed(HELP_TITLE.replace("{PAGE}", "1"), pages.get(0),
-                            null, HELP_FOOTER, Main.get().getJDA().getSelfUser().getAvatarUrl()).build()).submit().get();
+                    Message msg = chan.sendMessage(API.get().getEssentialEmbed(SERVER_TITLE.replace("{PAGE}", "1"), pages.get(0),
+                            null, SERVER_FOOTER, Main.get().getJDA().getSelfUser().getAvatarUrl()).build()).submit().get();
                     // "⏪"
                     // "◀️"
                     // "▶️"
@@ -159,8 +146,8 @@ public class HelpCommand extends ListenerAdapter {
                                 pageTracker.put(mid, 1);
                                 try {
                                     Message msg = Main.get().getJDA().getGuildById(g.getId()).getTextChannelById(chan.getId()).getMessageById(msgID).submit().get();
-                                    msg.editMessage(API.get().getEssentialEmbed(HELP_TITLE.replace("{PAGE}", "1"), pages.get(0),
-                                            null, HELP_FOOTER, Main.get().getJDA().getSelfUser().getAvatarUrl()).build()).submit();
+                                    msg.editMessage(API.get().getEssentialEmbed(SERVER_TITLE.replace("{PAGE}", "1"), pages.get(0),
+                                            null, SERVER_FOOTER, Main.get().getJDA().getSelfUser().getAvatarUrl()).build()).submit();
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
                                 }
@@ -173,8 +160,8 @@ public class HelpCommand extends ListenerAdapter {
                                     pageTracker.put(mid, backPage);
                                     try {
                                         Message msg = Main.get().getJDA().getGuildById(g.getId()).getTextChannelById(chan.getId()).getMessageById(msgID).submit().get();
-                                        msg.editMessage(API.get().getEssentialEmbed(HELP_TITLE.replace("{PAGE}", String.valueOf(backPage)), pages.get(sendpage),
-                                                null, HELP_FOOTER, Main.get().getJDA().getSelfUser().getAvatarUrl()).build()).submit();
+                                        msg.editMessage(API.get().getEssentialEmbed(SERVER_TITLE.replace("{PAGE}", String.valueOf(backPage)), pages.get(sendpage),
+                                                null, SERVER_FOOTER, Main.get().getJDA().getSelfUser().getAvatarUrl()).build()).submit();
                                     } catch (Exception ex) {
                                         ex.printStackTrace();
                                     }
@@ -188,8 +175,8 @@ public class HelpCommand extends ListenerAdapter {
                                     pageTracker.put(mid, nextPage);
                                     try {
                                         Message msg = Main.get().getJDA().getGuildById(g.getId()).getTextChannelById(chan.getId()).getMessageById(msgID).submit().get();
-                                        msg.editMessage(API.get().getEssentialEmbed(HELP_TITLE.replace("{PAGE}", String.valueOf(nextPage)), pages.get(sendpage),
-                                                null, HELP_FOOTER, Main.get().getJDA().getSelfUser().getAvatarUrl()).build()).submit();
+                                        msg.editMessage(API.get().getEssentialEmbed(SERVER_TITLE.replace("{PAGE}", String.valueOf(nextPage)), pages.get(sendpage),
+                                                null, SERVER_FOOTER, Main.get().getJDA().getSelfUser().getAvatarUrl()).build()).submit();
                                     } catch (Exception ex) {
                                         ex.printStackTrace();
                                     }
@@ -200,8 +187,8 @@ public class HelpCommand extends ListenerAdapter {
                                 pageTracker.put(mid, pages.size() - 1);
                                 try {
                                     Message msg = Main.get().getJDA().getGuildById(g.getId()).getTextChannelById(chan.getId()).getMessageById(msgID).submit().get();
-                                    msg.editMessage(API.get().getEssentialEmbed(HELP_TITLE.replace("{PAGE}", String.valueOf((pages.size()))), pages.get((pages.size() - 1)),
-                                            null, HELP_FOOTER, Main.get().getJDA().getSelfUser().getAvatarUrl()).build()).submit();
+                                    msg.editMessage(API.get().getEssentialEmbed(SERVER_TITLE.replace("{PAGE}", String.valueOf((pages.size()))), pages.get((pages.size() - 1)),
+                                            null, SERVER_FOOTER, Main.get().getJDA().getSelfUser().getAvatarUrl()).build()).submit();
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
                                 }
