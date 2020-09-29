@@ -14,9 +14,13 @@ public class LockdownHandler extends ListenerAdapter {
             if (mem != null && mem.getUser() != null && API.get().isLockedDown(evt.getGuild().getIdLong())) {
                 // Mem is not null
                 String reason = API.get().getLockdownReason(evt.getGuild().getIdLong());
-                evt.getMember().getUser().openPrivateChannel().submit().join().sendMessage(API.get().getCustomEmbed(
-                        "**THIS SERVER IS LOCKED DOWN**", "The server has been locked down for reason: `" + reason + "`",
-                        Color.RED, mem).build()).submit();
+                try {
+                    evt.getMember().getUser().openPrivateChannel().submit().join().sendMessage(API.get().getCustomEmbed(
+                            "**THIS SERVER IS LOCKED DOWN**", "The server has been locked down for reason: `" + reason + "`",
+                            Color.RED, mem).build()).submit();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
                 evt.getGuild().getController().kick(mem, reason).submit();
             }
         }

@@ -55,10 +55,15 @@ whilst messaging them the reason they cannot join (`<reason>`).
 
 `=lockstatus` - Take a look of the lockdown status of the server.
 
-*`=list` - Take a look at all the recently bumped servers on the list [this command can 
+`=list` - Take a look at all the recently bumped servers on the list [this command can 
 be disabled by the server owner, but then prevents usage of command `=bump`]
 
-*`=bump` - Bump your server to the top of EssentialBot's server listing (`=list`), can 
+`=list on` - Turn on the Server Listing feature. Can only be ran by Administrators.
+
+`=list off` - Turn off the Server Listing feature. Using `=bump` will become useless, and so 
+will `=list` for regular users. Can only be ran by Administrators.
+
+`=bump` - Bump your server to the top of EssentialBot's server listing (`=list`), can 
 be used once every 24 hours...
 
 *`Command` - This means this command and/or feature has not been implemented as of yet. 

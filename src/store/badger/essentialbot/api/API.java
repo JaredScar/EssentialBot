@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.entities.Role;
 
 import java.awt.*;
 import java.io.File;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -204,6 +205,22 @@ public class API {
         return guildIDs;
     }
 
+    public boolean bumpServer(long guildID) {
+        java.util.Date date = new Date(new java.util.Date().getTime());
+        Object param = new java.sql.Timestamp(date.getTime());
+        SQLHelper helper = getHelper();
+        try {
+            PreparedStatement stmt = helper.getConn().prepareStatement("UPDATE `ServerList` SET `Bumped_Date` = ? WHERE `guildID` = ?;");
+            stmt.setObject(1, param);
+            stmt.setLong(2, guildID);
+            stmt.execute();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean toggleServerList(long guildID, boolean toggle) {
         SQLHelper helper = getHelper();
         try {
@@ -211,9 +228,8 @@ public class API {
                     "`GuildID` = ?;");
             stmt.setBoolean(1, toggle);
             stmt.setLong(2, guildID);
-            if (stmt.execute()) {
-                return true;
-            }
+            stmt.execute();
+            return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

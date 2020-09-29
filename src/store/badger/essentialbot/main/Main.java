@@ -8,10 +8,7 @@ import net.dv8tion.jda.core.entities.Guild;
 import store.badger.essentialbot.api.API;
 import store.badger.essentialbot.api.SQLHelper;
 import store.badger.essentialbot.commands.*;
-import store.badger.essentialbot.handlers.GuildJoinHandler;
-import store.badger.essentialbot.handlers.LockdownHandler;
-import store.badger.essentialbot.handlers.ShadowHandler;
-import store.badger.essentialbot.handlers.StickyHandler;
+import store.badger.essentialbot.handlers.*;
 import store.badger.essentialbot.objects.StickyMessage;
 
 import javax.security.auth.login.LoginException;
@@ -53,6 +50,7 @@ public class Main {
                 .addEventListener(new ServerListCommand())
                 .addEventListener(new ServerBumpCommand())
                 .addEventListener(new GuildJoinHandler())
+                .addEventListener(new GuildLeaveHandler())
                 .build();
         jda.awaitReady();
         jda.getPresence().setPresence(Game.playing(" " + jda.getGuilds().size() + " Guilds | =help"), true);
