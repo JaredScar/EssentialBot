@@ -46,6 +46,15 @@ CREATE TABLE `Lockdown` (
     `Reason` TEXT(1024)
 );
 
+DROP TABLE `ServerList`;
+CREATE TABLE `ServerList` (
+    `SL_ID` INTEGER(64) AUTO_INCREMENT PRIMARY KEY,
+    `GuildID` BIGINT(32),
+    `Bumped_Date` DATETIME,
+    `Invite_Link` VARCHAR(64),
+    `Enabled` BIT(1)
+);
+
 DROP TABLE `ShadowBans`;
 CREATE TABLE `ShadowBans` (
     `SB_ID` INTEGER(64) AUTO_INCREMENT PRIMARY KEY,

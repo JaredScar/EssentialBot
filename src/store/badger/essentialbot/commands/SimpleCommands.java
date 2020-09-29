@@ -67,6 +67,7 @@ public class SimpleCommands extends ListenerAdapter {
         String[] args = evt.getMessage().getContentRaw().replace(command, "").split(" ");
         String argsString = evt.getMessage().getContentRaw().replace(command, "");
         if (command.equalsIgnoreCase("=servercount")) {
+            evt.getMessage().delete().submit();
             chan.sendMessage(API.get().getEssentialEmbed("EssentialBot's Server Count", "EssentialBot is on `"
                             + evt.getJDA().getGuilds().size() + "` servers in total...",
                     null, SERVER_FOOTER, Main.get().getJDA().getSelfUser().getAvatarUrl()).build()).submit();
@@ -75,6 +76,7 @@ public class SimpleCommands extends ListenerAdapter {
                 evt.getMessage().delete().submit();
                 int curCount = 0;
                 Guild[] guildArr = new Guild[GUILDS_PER_PAGE];
+                pages = new ArrayList<>();
                 for (Guild guild : evt.getJDA().getGuilds()) {
                     // Looping through their guilds
                     if (curCount < (GUILDS_PER_PAGE - 1)) {
@@ -184,7 +186,7 @@ public class SimpleCommands extends ListenerAdapter {
                                 menuActivityTimer.put(mid, 0);
                                 break;
                             case "⏩":
-                                pageTracker.put(mid, pages.size() - 1);
+                                pageTracker.put(mid, pages.size());
                                 try {
                                     Message msg = Main.get().getJDA().getGuildById(g.getId()).getTextChannelById(chan.getId()).getMessageById(msgID).submit().get();
                                     msg.editMessage(API.get().getEssentialEmbed(SERVER_TITLE.replace("{PAGE}", String.valueOf((pages.size()))), pages.get((pages.size() - 1)),

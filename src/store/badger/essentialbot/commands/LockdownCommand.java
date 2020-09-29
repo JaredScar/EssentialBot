@@ -13,9 +13,10 @@ public class LockdownCommand extends ListenerAdapter {
         Member mem = evt.getMember();
         long guildID = evt.getGuild().getIdLong();
         String command = evt.getMessage().getContentRaw().split(" ")[0];
-        String[] args = evt.getMessage().getContentRaw().replace(command + " ", "").split(" ");
+        String[] args = evt.getMessage().getContentRaw().split(" ");
         String argsString = evt.getMessage().getContentRaw().replace(command + " ", "");
         if (command.equalsIgnoreCase("=lockdown")) {
+            evt.getMessage().delete().submit();
             if (mem.isOwner() || API.get().hasPermission(guildID, mem, "permissionLockdown")) {
                 if (args.length > 1) {
                     // =lockdown <reason>

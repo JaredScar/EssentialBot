@@ -187,6 +187,75 @@ public class API {
         return false;
     }
 
+    public List<Long> getServerListingGuilds() {
+        ArrayList<Long> guildIDs = new ArrayList<>();
+        SQLHelper helper = getHelper();
+        try {
+            PreparedStatement stmt = helper.getConn().prepareStatement("SELECT `guildID` as id FROM `ServerList` WHERE `Enabled` = 1 ORDER BY `Bumped_Date` DESC;");
+            stmt.execute();
+            ResultSet res = stmt.getResultSet();
+            while (res.next()) {
+                long id = res.getLong("id");
+                guildIDs.add(id);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return guildIDs;
+    }
+
+    public boolean toggleServerList(long guildID, boolean toggle) {
+        SQLHelper helper = getHelper();
+        try {
+            PreparedStatement stmt = helper.getConn().prepareStatement("UPDATE `ServerList` SET `Enabled` = ? WHERE " +
+                    "`GuildID` = ?;");
+            stmt.setBoolean(1, toggle);
+            stmt.setLong(2, guildID);
+            if (stmt.execute()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public String getServerInvite(long guildID) {
+        SQLHelper helper = getHelper();
+        try {
+            PreparedStatement stmt = helper.getConn().prepareStatement("SELECT `Invite_Link` as invite FROM `ServerList` WHERE `guildID` = ?");
+            stmt.setLong(1, guildID);
+            stmt.execute();
+            ResultSet res = stmt.getResultSet();
+            while (res.next()) {
+                String inv = res.getString("invite");
+                return inv;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean isServerListOn(long guildID) {
+        SQLHelper helper = getHelper();
+        try {
+            PreparedStatement stmt = helper.getConn().prepareStatement("SELECT `Enabled` as enabled FROM `ServerList` WHERE " +
+                    "`GuildID` = ?;");
+            stmt.setLong(1, guildID);
+            stmt.execute();
+            ResultSet res = stmt.getResultSet();
+            if (res.next()) {
+                if (res.getBoolean("enabled")) {
+                    return true;
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean[] togglePermission(long guildID, long roleID, String permission) {
         SQLHelper helper = getHelper();
         try {

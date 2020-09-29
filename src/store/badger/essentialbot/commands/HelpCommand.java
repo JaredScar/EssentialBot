@@ -104,17 +104,27 @@ public class HelpCommand extends ListenerAdapter {
                                     "\n\n" +
                                     "`=ban @User <reason>`: This will ban the user from the discord permanently. \n[Requires `permissionBan`]\n" +
                                     "\n\n" +
-                                    "`=unban @User`: This will unban the user from the discord. \n[Requires `permissionBan`]" +
+                                    "`=unban @User`: This will unban the user from the discord. \n[Requires `permissionBan`]\n" +
                                     "\n\n" +
                                     "`=lockdown <reason>`: This will lock/unlock the discord and [locked] prevent people from joining \n" +
                                     "whilst messaging them the reason they cannot join (`<reason>`). \n[Requires `permissionLockdown`]"
                     );
                     pages.add(
-                            "`=lockstatus`: Take a look of the lockdown status of the server." +
+                            "`=lockstatus`: Take a look of the lockdown status of the server.\n" +
                                 "\n\n" +
-                                "`=servers`: List the servers EssentialBot is on." +
+                                "`=servers`: List the servers EssentialBot is on.\n" +
                                 "\n\n" +
-                                "`=servercount`: Show how many servers in total EssentialBot is on."
+                                "`=servercount`: Show how many servers in total EssentialBot is on.\n" +
+                                    "\n\n" +
+                                    "`=list on`: Turn the Server Listing feature on. \n[requires `ADMINISTRATOR`]\n" +
+                                    "\n\n" +
+                                    "`=list off`: Turn the Server Listing feature off. \n[requires `ADMINISTRATOR`]"
+                    );
+                    pages.add(
+                            "`=list`: Show the recently bumped servers on the Server Listing.\n" +
+                                    "\n\n" +
+                                    "`=bump`: Bump your server to the top of the Server Listing. (Only will work if Server Listing feature is enabled)\n" +
+                                    ""
                     );
                 }
                 try {
@@ -197,7 +207,7 @@ public class HelpCommand extends ListenerAdapter {
                                 menuActivityTimer.put(mid, 0);
                                 break;
                             case "⏩":
-                                pageTracker.put(mid, pages.size() - 1);
+                                pageTracker.put(mid, pages.size());
                                 try {
                                     Message msg = Main.get().getJDA().getGuildById(g.getId()).getTextChannelById(chan.getId()).getMessageById(msgID).submit().get();
                                     msg.editMessage(API.get().getEssentialEmbed(HELP_TITLE.replace("{PAGE}", String.valueOf((pages.size()))), pages.get((pages.size() - 1)),
